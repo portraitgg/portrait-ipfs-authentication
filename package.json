@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "ipfs-http-client": "^56.0.1",
+    "mongodb": "^4.4.1",
+    "multer": "^1.4.4"
+  }
+}
