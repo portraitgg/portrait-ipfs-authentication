@@ -5,6 +5,7 @@ const app = express();
 
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
+const maxSize = process.env.MAX_SIZE;
 
 const { create } = require('ipfs-http-client');
 const ipfsHost = process.env.IPFS_HOST
@@ -15,6 +16,7 @@ const dbName = process.env.DB_NAME;
 const dbClient = new MongoClient(dbUrl);
 const dbConnect = dbClient.connect();
 
+
 app.post("/", upload.single("data"), async function (req, res) {
     const accessToken = req.headers['access-token'];
     const ethAddress = req.headers['eth-address'];
@@ -24,7 +26,7 @@ app.post("/", upload.single("data"), async function (req, res) {
         const db = dbClient.db(dbName)
 
         return db
-            .collection('user')
+            .collection(process.env.DB_COLLECTION)
             .findOne({ ethAddress, accessToken })
             .then((result) => !!result)
     })
@@ -32,6 +34,10 @@ app.post("/", upload.single("data"), async function (req, res) {
     // Checking for missing fields or invalid authentication with AuthValid. If there are no missing fields and AuthValid is true, then the file is uploaded to IPFS.
     if (!req.file) {
         return res.status(400).json({ status: 400, message: 'Missing file' });
+    }
+    
+    if (req.file.size > maxSize) {
+        return res.status(400).json({ status: 400, message: 'File too large' });
     }
 
     if (!accessToken) {
