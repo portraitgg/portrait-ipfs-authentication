@@ -57,7 +57,6 @@ app.post("/", upload.single("data"), async function (req, res) {
     }
 
     try {
-        console.log(req.file.mimetype)
         const ipfs = create({
             host: ipfsHost,
             port: '5001',
