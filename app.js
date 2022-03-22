@@ -40,6 +40,10 @@ app.post("/", upload.single("data"), async function (req, res) {
         return res.status(400).json({ status: 400, message: 'File too large' });
     }
 
+    if (req.file.mimetype !== 'image/jpeg' && req.file.mimetype !== 'image/png' && req.file.mimetype !== 'image/gif') {
+        return res.status(400).json({ status: 400, message: 'Invalid file type' });
+    }
+
     if (!accessToken) {
         return res.status(400).json({ status: 400, message: 'Missing access token' });
     }
@@ -53,6 +57,7 @@ app.post("/", upload.single("data"), async function (req, res) {
     }
 
     try {
+        console.log(req.file.mimetype)
         const ipfs = create({
             host: ipfsHost,
             port: '5001',
