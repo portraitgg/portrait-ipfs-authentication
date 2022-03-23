@@ -1,6 +1,6 @@
 # portrait-ipfs-authentication
 
-portrait-ipfs-authentication is a Node.js Express authentication layer for handling authentication by means of ``accessToken`` and ``ethAddress``. The layer acts as a gate between an IPFS node and the web such that no security and networking changes have to be made for the IPFS daemon.
+portrait-ipfs-authentication is a Node.js Express authentication layer for handling authentication by means of ``accessToken`` and ``ethAddress``. The layer acts as a gate between an IPFS node and the web such that no security and networking changes have to be made for the IPFS daemon. We also added the possibility to filter on mimetypes (images in this implementation) and/or file size. File size may also be adjusted in the config file of the IPFS daemon.
 
 ## Installation
 
