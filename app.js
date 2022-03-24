@@ -35,7 +35,7 @@ app.post("/", upload.single("data"), async function (req, res) {
     if (!req.file) {
         return res.status(400).json({ status: 400, message: 'Missing file' });
     }
-    
+
     if (req.file.size > maxSize) {
         return res.status(400).json({ status: 400, message: 'File too large' });
     }
@@ -77,6 +77,11 @@ app.post("/", upload.single("data"), async function (req, res) {
         return res.status(400).json({ status: 400, message: e.message });
     }
 
+});
+
+// This is because Better Uptime (status monitor) requires a response from GET. 
+app.get("/", async function (req, res) {
+    res.send('portrait-ipfs-authentication active');
 });
 
 const port = process.env.PORT || 1390
